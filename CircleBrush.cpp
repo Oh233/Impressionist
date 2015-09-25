@@ -49,7 +49,9 @@ void CircleBrush::BrushEnd( const Point source, const Point target )
 /**
  * \brief Draw a circle, with source point and target point and radius given
  */
-void CircleBrush::DrawCircle(Point source, Point target, float r) {
+void CircleBrush::DrawCircle(Point source, Point target, float r, bool flag, double R, double G, double B,
+	int H, int S, int V) {
+
 	//The brush is moved to a new place. I need to draw a filled circle there
 	int num_segments = (int)(10 * sqrtf(r));//change the 10 to a smaller/bigger number as needed
 
@@ -64,7 +66,19 @@ void CircleBrush::DrawCircle(Point source, Point target, float r) {
 
 	glBegin(GL_TRIANGLE_FAN);
 	//set color
-	SetColor(source);
+	if (!flag) {
+		SetColor(source);
+	}
+	else {
+		ImpressionistDoc* pDoc = GetDocument();
+		GLubyte color[4];
+		color[0] = (GLubyte)R;
+		color[1] = (GLubyte)G;
+		color[2] = (GLubyte)B;
+		// std::cout << (int)color[0] << " " << (int)color[1] << " " << (int)color[2] << std::endl;
+		color[3] = pDoc->getAlpha();
+		glColor4ubv(color);
+	}
 	//first point is the center point
 	glVertex2f((GLfloat)target.x, (GLfloat)target.y);
 	//then loop to add the bounding points to the vertex map

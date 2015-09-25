@@ -402,6 +402,14 @@ void PaintView::paintlyDiff(unsigned char* canvas, unsigned char* reference, uns
 void PaintView::paintlyLayer(unsigned char* canvas, unsigned char* diff, double gridRate, int brushSize,
 	int threshold, int width, int height, unsigned char* reference)
 {
+	int Cr = (int)m_pDoc->getPaintlyJr() * 255;
+	int Cg = (int)m_pDoc->getPaintlyJg() * 255;
+	int Cb = (int)m_pDoc->getPaintlyJb() * 255;
+	cout << Cr << " " << Cg << " " << Cb << endl;
+	int Ch = m_pDoc->getPaintlyJh() * 255;
+	int Cs = m_pDoc->getPaintlyJs() * 255;
+	int Cv = m_pDoc->getPaintlyJv() * 255;
+
 	int gridSize = (int)(gridRate * brushSize);
 	vector<Point> vec;
 	for (int i = 0; i < height; i += gridSize)
@@ -449,10 +457,42 @@ void PaintView::paintlyLayer(unsigned char* canvas, unsigned char* diff, double 
 			vector<int> vg;
 			vector<int> vb;
 			makeCurved(vec[i], reference, brushSize, canvas, vp, vr, vg, vb);
-			for (int i = 0; i < vp.size(); i++) 
+			cout << Cr << Cg << Cb << endl;
+			int RR = rand() % 100;
+			cout << RR << endl;
+			if (RR < Cr * 50) {
+				Cr = (m_pDoc->m_ucBitmap[vec[i].y + width + vec[i].x]) + 128 * Cr;
+				if (Cr > 255) Cr = 255;
+			}
+			else
 			{
+				Cr = (m_pDoc->m_ucBitmap[vec[i].y + height + vec[i].x]);
+			}
+
+			int GG = rand() % 100;
+			if (GG < Cg * 50) {
+				Cg = (m_pDoc->m_ucBitmap[vec[i].y + m_nDrawWidth + vec[i].x + 1]) + 128 * Cg;
+				if (Cg > 255) Cg = 255;
+			}
+			else
+			{
+				Cg = (m_pDoc->m_ucBitmap[vec[i].y + m_nDrawWidth + vec[i].x + 1]);
+			}
+
+			int BB = rand() % 100;
+			if (BB < Cb * 50) {
+				Cb = (m_pDoc->m_ucBitmap[vec[i].y + m_nDrawWidth + vec[i].x + 2]) + 128 * Cb;
+				if (Cb > 255) Cb = 255;
+			}
+			else
+			{
+				Cb = (m_pDoc->m_ucBitmap[vec[i].y + m_nDrawWidth + vec[i].x + 2]);
+			}
+
+
+			for (int j = 0; j < vp.size(); j++) {
 				CircleBrush* a = (CircleBrush*)m_pDoc->m_pCurrentBrush;
-				a->DrawCircle(vp[0], vp[i], (((float)(brushSize*2))/3.0));
+				a->DrawCircle(vp[0], vp[j], (((float)(brushSize * 2)) / 3.0), 1, Cr, Cg, Cb, Ch, Cs, Cv);
 			}
 		}
 		else

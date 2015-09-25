@@ -145,6 +145,7 @@ void ImpressionistDoc::setPaintlyStyle(int type)
 	if (type != STYLE_CUSTOMIZE)
 	{
 		m_pUI->m_paintlyStrokeChoice->deactivate();
+		m_pUI->m_paintlyThresholdSlider->deactivate();
 		m_pUI->m_paintlyMaxBrushSizeSlider->deactivate();
 		m_pUI->m_paintlyMinBrushSizeSlider->deactivate();
 		m_pUI->m_paintlyGridSlider->deactivate();
@@ -154,6 +155,20 @@ void ImpressionistDoc::setPaintlyStyle(int type)
 		m_pUI->m_paintlyMinStrokeLengthSlider->deactivate();
 		m_pUI->m_paintlyAlphaSlider->deactivate();
 		m_pUI->m_paintlyLayersSlider->deactivate();
+	}
+	else
+	{
+		m_pUI->m_paintlyStrokeChoice->activate();
+		m_pUI->m_paintlyThresholdSlider->activate();
+		m_pUI->m_paintlyMaxBrushSizeSlider->activate();
+		m_pUI->m_paintlyMinBrushSizeSlider->activate();
+		m_pUI->m_paintlyGridSlider->activate();
+		m_pUI->m_paintlyCurvatureSlider->activate();
+		m_pUI->m_paintlyBlurSlider->activate();
+		m_pUI->m_paintlyMaxStrokeLengthSlider->activate();
+		m_pUI->m_paintlyMinStrokeLengthSlider->activate();
+		m_pUI->m_paintlyAlphaSlider->activate();
+		m_pUI->m_paintlyLayersSlider->activate();
 	}
 
 	if (type == STYLE_IMPRESSIONIST)
@@ -168,6 +183,51 @@ void ImpressionistDoc::setPaintlyStyle(int type)
 		m_nPaintlyMaxStroke = 8;
 		m_nPaintlyMinStroke = 4;
 		m_dPaintlyAlpha = 0.85;
+		m_nPaintlyLayers = 2;
+	}
+
+	if (type == STYLE_EXPRESSIONIST)
+	{
+		m_nPaintlyStrokeType = 1;
+		m_nPaintlyThreshold = 10;
+		m_nPaintlyMaxBrush = 7;
+		m_nPaintlyMinBrush = 3;
+		m_dPaintlyGrid = 1.0;
+		m_dPaintlyCurvature = 0.45;
+		m_dPaintlyBlur = 0.5;
+		m_nPaintlyMaxStroke = 20;
+		m_nPaintlyMinStroke = 12;
+		m_dPaintlyAlpha = 1.0;
+		m_nPaintlyLayers = 3;
+	}
+
+	if (type == STYLE_COLORISTWASH)
+	{
+		m_nPaintlyStrokeType = 1;
+		m_nPaintlyThreshold = 20;
+		m_nPaintlyMaxBrush = 9;
+		m_nPaintlyMinBrush = 6;
+		m_dPaintlyGrid = 0.65;
+		m_dPaintlyCurvature = 1.0;
+		m_dPaintlyBlur = 0.75;
+		m_nPaintlyMaxStroke = 4;
+		m_nPaintlyMinStroke = 1;
+		m_dPaintlyAlpha = 0.3;
+		m_nPaintlyLayers = 2;
+	}
+
+	if (type == STYLE_POINTILLIST)
+	{
+		m_nPaintlyStrokeType = 1;
+		m_nPaintlyThreshold = 20;
+		m_nPaintlyMaxBrush = 6;
+		m_nPaintlyMinBrush = 2;
+		m_dPaintlyGrid = 1.00;
+		m_dPaintlyCurvature = 1.0;
+		m_dPaintlyBlur = 0.75;
+		m_nPaintlyMaxStroke = 2;
+		m_nPaintlyMinStroke = 1;
+		m_dPaintlyAlpha = 1.0;
 		m_nPaintlyLayers = 2;
 	}
 
@@ -296,6 +356,7 @@ double ImpressionistDoc::getPaintlyJr()
 
 void ImpressionistDoc::setPaintlyJr(double val)
 {
+	cout << "aa" << endl;
 	m_dPaintlyJr = val;
 }
 
@@ -321,32 +382,32 @@ void ImpressionistDoc::setPaintlyJb(double val)
 
 double ImpressionistDoc::getPaintlyJh()
 {
-	return m_dPaintlyJr;
+	return m_dPaintlyJh;
 }
 
 void ImpressionistDoc::setPaintlyJh(double val)
 {
-	m_dPaintlyJr = val;
+	m_dPaintlyJh = val;
 }
 
 double ImpressionistDoc::getPaintlyJs()
 {
-	return m_dPaintlyJg;
+	return m_dPaintlyJs;
 }
 
 void ImpressionistDoc::setPaintlyJs(double val)
 {
-	m_dPaintlyJg = val;
+	m_dPaintlyJs = val;
 }
 
 double ImpressionistDoc::getPaintlyJv()
 {
-	return m_dPaintlyJb;
+	return m_dPaintlyJv;
 }
 
 void ImpressionistDoc::setPaintlyJv(double val)
 {
-	m_dPaintlyJb = val;
+	m_dPaintlyJv = val;
 }
 
 
